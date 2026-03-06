@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour
 {
+    [SerializeField] private float movementSpeed = 350f;
     private Rigidbody2D _rigidbody2D;
-    [SerializeField] private float MovementSpeed = 5f;
     private Vector2 _movementVector;
 
     void Start()
@@ -21,7 +21,7 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        _rigidbody2D.AddForce(_movementVector * MovementSpeed);
+        _rigidbody2D.AddForce(_movementVector * movementSpeed);
     }
 
     void OnMove(InputValue movementValue)

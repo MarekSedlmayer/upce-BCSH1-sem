@@ -6,21 +6,14 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    void Start()
-    {
+    [SerializeField] private WeaponContainer[] weaponContainers = new WeaponContainer[1];
 
-    }
-
-    void Update()
-    {
-
-    }
     void OnLook(InputValue input)
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(input.Get<Vector2>());
 
         float zRotation = Mathf.Atan2(transform.position.y - mousePosition.y, transform.position.x - mousePosition.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, zRotation);
+        transform.rotation = Quaternion.Euler(0, 0, zRotation+90);
 
     }
 
@@ -30,7 +23,10 @@ public class Player : MonoBehaviour
 
         if (Vector2.Distance(mousePosition, new Vector2(transform.position.x, transform.position.y)) > 1f)
         {
-            //Activate bullet
+            foreach (WeaponContainer container in weaponContainers)
+            {
+                container.Shoot();
+            }
         }
     }
 }

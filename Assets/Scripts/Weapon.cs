@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] private GameObject bullet;
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    [SerializeField] private ObjectPool bulletPool;
 
     public void Shoot()
     {
-        Instantiate(bullet, transform.position, transform.rotation);
+        GameObject bullet = bulletPool.Get();
+        
+        bullet.transform.SetPositionAndRotation(transform.position, transform.rotation);
+        bullet.SetActive(true);
     }
 }

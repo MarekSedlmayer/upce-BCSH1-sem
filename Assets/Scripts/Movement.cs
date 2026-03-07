@@ -10,13 +10,9 @@ public class Movement : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     private Vector2 _movementVector;
 
-    void Start()
+    void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        if (_rigidbody2D == null)
-        {
-            this.enabled = false;
-        }
     }
 
     void FixedUpdate()

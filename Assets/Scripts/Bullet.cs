@@ -2,21 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float timeToLive = 10f;
     [SerializeField] private float bulletSpeed = 100f;
 
-    void Start()
-    {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
+    private Rigidbody2D _rigidbody2D;
 
-        Destroy(gameObject, timeToLive);
+    void Awake()
+    {
+        _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void OnEnable()
     {
+        _rigidbody2D.AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
+        Invoke(nameof(Disable), timeToLive);
+    }
 
+    private void Disable()
+    {
+        gameObject.SetActive(false);
+    }
+
+    void OnDisable()
+    {
+        _rigidbody2D.velocity = Vector2.zero;
     }
 }

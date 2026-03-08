@@ -5,10 +5,23 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float timeToLive = 10f;
-    [SerializeField] private float bulletSpeed = 100f;
-
+    private float _timeToLive = 5f;
+    private float _bulletSpeed = 20f;
+    private float _damage = 1f;
     private Rigidbody2D _rigidbody2D;
+
+    public void SetTimeToLive(float timeToLive)
+    {
+        _timeToLive = timeToLive;
+    }
+    public void SetSpeed(float speed)
+    {
+        _bulletSpeed = speed;
+    }
+    public void SetDamage(float damage)
+    {
+        _damage = damage;
+    }
 
     void Awake()
     {
@@ -17,8 +30,8 @@ public class Bullet : MonoBehaviour
 
     void OnEnable()
     {
-        _rigidbody2D.AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
-        Invoke(nameof(Disable), timeToLive);
+        _rigidbody2D.AddForce(transform.up * _bulletSpeed, ForceMode2D.Impulse);
+        Invoke(nameof(Disable), _timeToLive);
     }
 
     private void Disable()
@@ -29,5 +42,15 @@ public class Bullet : MonoBehaviour
     void OnDisable()
     {
         _rigidbody2D.velocity = Vector2.zero;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Destroyable>(out var destroyable))
+        {
+            destroyable.TakeDamage(_damage);
+            CancelInvoke(nameof(Disable));
+            Disable();
+        }
     }
 }

@@ -10,16 +10,10 @@ public class Bullet : MonoBehaviour
     private float _damage = 1f;
     private Rigidbody2D _rigidbody2D;
 
-    public void SetTimeToLive(float timeToLive)
+    public void Init(float timeToLive, float speed, float damage)
     {
         _timeToLive = timeToLive;
-    }
-    public void SetSpeed(float speed)
-    {
         _bulletSpeed = speed;
-    }
-    public void SetDamage(float damage)
-    {
         _damage = damage;
     }
 

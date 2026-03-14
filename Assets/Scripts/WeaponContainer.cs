@@ -10,7 +10,7 @@ public class WeaponContainer : MonoBehaviour
     {
         if (weapon != null)
         {
-            weapon.Shoot();
+            weapon.TryShoot();
         }
     }
 }

@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     [SerializeField] private WeaponContainer[] weaponContainers = new WeaponContainer[1];
+    [SerializeField] private PlayerInput playerInput;
+    private InputAction _fireAction;
 
     void OnLook(InputValue input)
     {
@@ -15,8 +17,20 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, zRotation+90);
 
     }
+    void Awake()
+    {
+        _fireAction = playerInput.actions["Fire"];
+    }
 
-    void OnFire()
+    void Update()
+    {
+        if (_fireAction.IsPressed())
+        {
+            Fire();
+        }
+    }
+
+    void Fire()
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 

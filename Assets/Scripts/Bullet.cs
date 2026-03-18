@@ -40,9 +40,15 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.TryGetComponent<Movement>(out var player)) return;
         if (collision.TryGetComponent<Destroyable>(out var destroyable))
         {
             destroyable.TakeDamage(_damage);
+            CancelInvoke(nameof(Disable));
+            Disable();
+        }
+        else
+        {
             CancelInvoke(nameof(Disable));
             Disable();
         }

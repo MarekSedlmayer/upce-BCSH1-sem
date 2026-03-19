@@ -5,10 +5,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField] private ObjectPool bulletPool;
-    [SerializeField] private float timeToLive = 5f;
-    [SerializeField] private float bulletSpeed = 20f;
-    [SerializeField] private float damage = 1f;
-    [SerializeField] private float fireCooldown = 0.2f; // (second / bullets)
+    [SerializeField] private WeaponScriptableObject weaponData;
 
     private float _nextFireTime = 0f;
 
@@ -17,7 +14,7 @@ public class Weapon : MonoBehaviour
         if (Time.time >= _nextFireTime)
         {
             Shoot();
-            _nextFireTime = fireCooldown + Time.time;
+            _nextFireTime = weaponData.FireCooldown + Time.time;
         }
     }
 
@@ -27,7 +24,7 @@ public class Weapon : MonoBehaviour
 
         if (obj.TryGetComponent<Bullet>(out var bullet))
         {
-            bullet.Init(timeToLive, bulletSpeed, damage);
+            bullet.Init(weaponData.TimeToLive, weaponData.BulletSpeed, weaponData.Damage);
         }
         obj.transform.SetPositionAndRotation(transform.position, transform.rotation);
         obj.SetActive(true);

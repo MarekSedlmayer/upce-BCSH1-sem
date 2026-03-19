@@ -1653,10 +1653,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPool: {fileID: 1857208991}
-  timeToLive: 3
-  bulletSpeed: 20
-  damage: 1
-  fireCooldown: 0.2
+  weaponData: {fileID: 11400000, guid: d72bf8f16f4072c4f85109acceac682a, type: 2}
 --- !u!114 &1657636927
 MonoBehaviour:
   m_ObjectHideFlags: 0

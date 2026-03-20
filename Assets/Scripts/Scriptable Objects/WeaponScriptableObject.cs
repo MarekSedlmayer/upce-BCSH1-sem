@@ -10,8 +10,8 @@ public class WeaponScriptableObject : ScriptableObject
     [SerializeField] private float damage = 1f;
     [SerializeField] private float fireCooldown = 0.2f; // (second / bullets)
 
-    public float TimeToLive { get => timeToLive; private set => timeToLive = value; }
-    public float BulletSpeed { get => bulletSpeed; private set => bulletSpeed = value; }
-    public float Damage { get => damage; private set => damage = value; }
-    public float FireCooldown { get => fireCooldown; private set => fireCooldown = value; }
+    public float TimeToLive => timeToLive;
+    public float BulletSpeed => bulletSpeed;
+    public float Damage => damage;
+    public float FireCooldown => fireCooldown;
 }

@@ -4,25 +4,77 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> _visibleEnemies = new List<GameObject>();
+    [SerializeField] private GameObject mainCamera;
+
     [Header("Connected rooms")]
     [SerializeField] private Room roomTop;
     [SerializeField] private Room roomBottom;
     [SerializeField] private Room roomLeft;
     [SerializeField] private Room roomRight;
     [Header("Doors")]
-    [SerializeField] private GameObject doorTop;
-    [SerializeField] private GameObject doorBottom;
-    [SerializeField] private GameObject doorLeft;
-    [SerializeField] private GameObject doorRight;
+    [SerializeField] private Door doorTop;
+    [SerializeField] private Door doorBottom;
+    [SerializeField] private Door doorLeft;
+    [SerializeField] private Door doorRight;
 
-    private bool isEmpty = true;
-    //private bool isPlayerIn = false;
+    private bool _isEmpty; // All visible enemies are gone.
+    //private bool _isPlayerIn = false;
 
+    void Awake()
+    {
+        doorTop.ParentRoom = this;
+        doorTop.AdjacentRoom = roomTop;
+        doorBottom.ParentRoom = this;
+        doorBottom.AdjacentRoom = roomBottom;
+        doorLeft.ParentRoom = this;
+        doorLeft.AdjacentRoom = roomLeft;
+        doorRight.ParentRoom = this;
+        doorRight.AdjacentRoom = roomRight;
+    }
     void Start()
     {
-        if (/*roomTop != null && */isEmpty)
+        OpenDoors();
+    }
+
+    void UpdateRoom()
+    {
+        _isEmpty = _visibleEnemies.Count == 0;
+
+        if (_isEmpty)
         {
-            doorTop.GetComponent<Collider2D>().enabled = false;
+            OpenDoors();
         }
+        else
+        {
+            CloseDoors();
+        }
+    }
+
+    void OpenDoors()
+    {
+        if (roomTop != null) doorTop.Open();
+        if (roomBottom != null) doorBottom.Open();
+        if (roomLeft != null) doorLeft.Open();
+        if (roomRight != null) doorRight.Open();
+    }
+
+    void CloseDoors()
+    {
+        if (roomTop != null) doorTop.Close();
+        if (roomBottom != null) doorBottom.Close();
+        if (roomLeft != null) doorLeft.Close();
+        if (roomRight != null) doorRight.Close();
+    }
+
+    public void PlayerLeft()
+    {
+        //_isPlayerIn = false;
+    }
+    public void PlayerEntered()
+    {
+        mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, mainCamera.transform.position.z);
+        //_isPlayerIn = true;
+        UpdateRoom();
     }
 }

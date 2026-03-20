@@ -40,7 +40,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Movement>(out var player)) return;
+        if (collision.TryGetComponent<Movement>(out var player) || collision.isTrigger) return;
         if (collision.TryGetComponent<Destroyable>(out var destroyable))
         {
             destroyable.TakeDamage(_damage);

@@ -30,7 +30,7 @@ public class Door : MonoBehaviour
             if (col.isTrigger) _proximityTrigger = col;
             else _doorCollider = col;
         }
-        teleporter.PlayerTeleported += OnPlayerTeleported;
+        if (teleporter != null) teleporter.PlayerTeleported += OnPlayerTeleported;
     }
 
     private void OnPlayerTeleported(Teleporter t)

@@ -18,61 +18,108 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private GameObject LoadMenu;
     [SerializeField] private GameObject newProfileMenu;
+    [SerializeField] private InputField inputField;
 
-    private List<ProfileData> _profiles;
-    
+    private readonly ProfileData[] _profiles = new ProfileData[_numberOfProfiles];
+
+    private int _newProfileMenuIndex = -1;
+
     void Start()
     {
         LoadProfiles();
+        RefreshMainMenu();
     }
 
-    public void Play(int index)
+    public void PlayProfile(int index)
     {
         //TODO: set profile to persistent object
         //_profiles[index];
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
     public void QuitGame()
     {
         Application.Quit();
     }
 
-    public void OpenNewProfileMenu()
+    public void OpenNewProfileMenu(int index)
     {
+        _newProfileMenuIndex = index;
         newProfileMenu.SetActive(true);
         LoadMenu.SetActive(false);
     }
-
-    public void NewProfile(string name)
+    public void CloseNewProfileMenu()
     {
-        //TODO: create new profile with "name"
-        //Debug.Log(name);
+        _newProfileMenuIndex = -1;
+        LoadMenu.SetActive(true);
+        newProfileMenu.SetActive(false);
+    }
+
+    public void NewProfile()
+    {
+        if (inputField.text.Length > 0 && _newProfileMenuIndex >= 0)
+        {
+            ProfileData profile = new ProfileData { ProfileName = inputField.text };
+            _profiles[_newProfileMenuIndex] = profile;
+            File.WriteAllText(GetProfilePath(_newProfileMenuIndex), JsonUtility.ToJson(profile));
+
+            CloseNewProfileMenu();
+            RefreshMainMenu();
+        }
+    }
+
+    public void DeleteProfile(int index)
+    {
+        string path = GetProfilePath(index);
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+            _profiles[index] = null;
+        }
+
+        RefreshMainMenu();
     }
 
     private void LoadProfiles()
     {
         for (int i = 0; i < _numberOfProfiles; i++)
         {
-            string fileName = _profileFileName.Replace(_wildCardString, (i + 1).ToString());
-            string path = Path.Combine(Application.persistentDataPath, fileName);
-
+            string path = GetProfilePath(i);
             if (File.Exists(path))
             {
-                string profileDataString = File.ReadAllText(path);
-                ProfileData profile = JsonUtility.FromJson<ProfileData>(profileDataString);
-                _profiles[i] = profile;
+                _profiles[i] = JsonUtility.FromJson<ProfileData>(File.ReadAllText(path));
+            }
+        }
+    }
 
-                slotButtons[i].GetComponentInChildren<Text>().text = profile.ProfileName;
-                int index = i;
-                slotButtons[i].GetComponent<Button>().onClick.AddListener(()=>Play(index));
-                deleteButtons[i].SetActive(true); //TODO: add delete buttons
+    private void RefreshMainMenu()
+    {
+        for (int i = 0; i < _numberOfProfiles; i++)
+        {
+            int index = i;
+            slotButtons[i].GetComponent<Button>().onClick.RemoveAllListeners();
+            deleteButtons[i].GetComponent<Button>().onClick.RemoveAllListeners();
 
+            if (_profiles[i] != null)
+            {
+                slotButtons[i].GetComponentInChildren<Text>().text = _profiles[i].ProfileName;
+                slotButtons[i].GetComponent<Button>().onClick.AddListener(() => PlayProfile(index));
+
+                deleteButtons[i].GetComponent<Button>().onClick.AddListener(() => DeleteProfile(index));
+                deleteButtons[i].SetActive(true);
             }
             else
             {
                 slotButtons[i].GetComponentInChildren<Text>().text = _defaultSlotString + " " + (i + 1);
-                slotButtons[i].GetComponent<Button>().onClick.AddListener(OpenNewProfileMenu);
+                slotButtons[i].GetComponent<Button>().onClick.AddListener(() => OpenNewProfileMenu(index));
+
+                deleteButtons[i].SetActive(false);
             }
         }
+    }
+
+    private string GetProfilePath(int index)
+    {
+        return Path.Combine(Application.persistentDataPath, _profileFileName.Replace(_wildCardString, (index + 1).ToString()));
     }
 }

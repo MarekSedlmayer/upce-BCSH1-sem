@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private GameObject LoadMenu;
     [SerializeField] private GameObject newProfileMenu;
-    [SerializeField] private InputField inputField;
+    [SerializeField] private TMP_InputField inputField;
 
     private readonly ProfileData[] _profiles = new ProfileData[_numberOfProfiles];
 
@@ -102,7 +103,7 @@ public class MainMenu : MonoBehaviour
 
             if (_profiles[i] != null)
             {
-                slotButtons[i].GetComponentInChildren<Text>().text = _profiles[i].ProfileName;
+                slotButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = _profiles[i].ProfileName;
                 slotButtons[i].GetComponent<Button>().onClick.AddListener(() => PlayProfile(index));
 
                 deleteButtons[i].GetComponent<Button>().onClick.AddListener(() => DeleteProfile(index));
@@ -110,7 +111,7 @@ public class MainMenu : MonoBehaviour
             }
             else
             {
-                slotButtons[i].GetComponentInChildren<Text>().text = _defaultSlotString + " " + (i + 1);
+                slotButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = _defaultSlotString + " " + (i + 1);
                 slotButtons[i].GetComponent<Button>().onClick.AddListener(() => OpenNewProfileMenu(index));
 
                 deleteButtons[i].SetActive(false);

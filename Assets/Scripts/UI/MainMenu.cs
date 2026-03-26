@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,9 +12,6 @@ public class MainMenu : MonoBehaviour
 
     private static readonly int _numberOfProfiles = 3;
     private static readonly string _defaultSlotString = "EMPTY SLOT";
-    private static readonly string _wildCardString = "*";
-    private static readonly string _fileExtension = ".txt";
-    private static readonly string _profileFileName = "profile_" + _wildCardString + _fileExtension;
 
     [SerializeField] private GameObject LoadMenu;
     [SerializeField] private GameObject newProfileMenu;
@@ -25,6 +21,8 @@ public class MainMenu : MonoBehaviour
 
     private int _newProfileMenuIndex = -1;
 
+    [SerializeField] private GameManager gameManager;
+
     void Start()
     {
         LoadProfiles();
@@ -33,8 +31,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayProfile(int index)
     {
-        //TODO: set profile to persistent object
-        //_profiles[index];
+        gameManager.ProfileData = _profiles[index];
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
@@ -62,7 +59,7 @@ public class MainMenu : MonoBehaviour
         {
             ProfileData profile = new ProfileData { ProfileName = inputField.text };
             _profiles[_newProfileMenuIndex] = profile;
-            File.WriteAllText(GetProfilePath(_newProfileMenuIndex), JsonUtility.ToJson(profile));
+            ProfileManager.SaveProfile(profile, _newProfileMenuIndex);
 
             CloseNewProfileMenu();
             RefreshMainMenu();
@@ -71,12 +68,7 @@ public class MainMenu : MonoBehaviour
 
     public void DeleteProfile(int index)
     {
-        string path = GetProfilePath(index);
-        if (File.Exists(path))
-        {
-            File.Delete(path);
-            _profiles[index] = null;
-        }
+        if (ProfileManager.DeleteProfile(index)) _profiles[index] = null;
 
         RefreshMainMenu();
     }
@@ -85,11 +77,7 @@ public class MainMenu : MonoBehaviour
     {
         for (int i = 0; i < _numberOfProfiles; i++)
         {
-            string path = GetProfilePath(i);
-            if (File.Exists(path))
-            {
-                _profiles[i] = JsonUtility.FromJson<ProfileData>(File.ReadAllText(path));
-            }
+            _profiles[i] = ProfileManager.LoadProfile(i);
         }
     }
 
@@ -117,10 +105,5 @@ public class MainMenu : MonoBehaviour
                 deleteButtons[i].SetActive(false);
             }
         }
-    }
-
-    private string GetProfilePath(int index)
-    {
-        return Path.Combine(Application.persistentDataPath, _profileFileName.Replace(_wildCardString, (index + 1).ToString()));
     }
 }

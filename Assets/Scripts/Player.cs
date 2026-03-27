@@ -5,8 +5,11 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private WeaponContainer[] weaponContainers = new WeaponContainer[1];
+    [SerializeField] private WeaponContainer[] weaponContainers = new WeaponContainer[2];
     [SerializeField] private PlayerInput playerInput;
+
+    public WeaponContainer[] WeaponContainers => weaponContainers;
+
     private InputAction _fireAction;
 
     void OnLook(InputValue input)

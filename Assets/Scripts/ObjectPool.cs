@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    [SerializeField] private GameObject prefab;
-    [SerializeField] private int initialSize = 10;
+    private GameObject _prefab;
+    private int _initialSize;
 
     private readonly List<GameObject> _pool = new List<GameObject>();
 
-    void Awake()
+    public void Init(GameObject prefab, int initialSize)
     {
-        for (int i = 0; i < initialSize; i++)
+        _prefab = prefab;
+        _initialSize = initialSize;
+
+        for (int i = 0; i < _initialSize; i++)
         {
             CreateObject();
         }
@@ -19,7 +22,7 @@ public class ObjectPool : MonoBehaviour
 
     private GameObject CreateObject()
     {
-        GameObject obj = Instantiate(prefab, transform);
+        GameObject obj = Instantiate(_prefab, transform);
         obj.SetActive(false);
         _pool.Add(obj);
         return obj;

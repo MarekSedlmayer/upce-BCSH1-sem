@@ -1156,6 +1156,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProfileData:
     ProfileName: 
+    PlayerPosition: {x: 0, y: 0, z: 0}
+    WeaponsInUse:
+    - 
+    - 
+    - 
+    - 
+  playerPrefab: {fileID: 4604768438851740993, guid: ca0a66db74e481644ac3242ba19821ca, type: 3}
 --- !u!1 &621878773
 GameObject:
   m_ObjectHideFlags: 0

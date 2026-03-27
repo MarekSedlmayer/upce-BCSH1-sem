@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class WeaponContainer : MonoBehaviour
 {
-    [SerializeField] private Weapon weapon;
+    private Weapon _weapon;
+
+    public void SetWeapon(Weapon weapon)
+    {
+        _weapon = weapon;
+    }
 
     public void Shoot()
     {
-        if (weapon != null)
+        if (_weapon != null)
         {
-            weapon.TryShoot();
+            _weapon.TryShoot(transform.position, transform.rotation);
         }
     }
 }

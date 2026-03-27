@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb2dbf1a76add047858f2b7d9538a4d, type: 3}
   m_Name: BasicWeapon
   m_EditorClassIdentifier: 
+  id: BasicMinigun
   timeToLive: 5
   bulletSpeed: 20
   damage: 1
   fireCooldown: 0.2
+  weaponType: 0
+  bulletPrefab: {fileID: 4473169755775791503, guid: fa15eb2fdf3c3854f876002f393556ff, type: 3}
+  bulletPoolInitialSize: 10

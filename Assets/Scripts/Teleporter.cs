@@ -10,7 +10,7 @@ public class Teleporter : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Movement>(out var player))
+        if (collision.TryGetComponent<PlayerMovement>(out var player))
         {
             player.transform.position = destination.position;
             PlayerTeleported?.Invoke(this);

@@ -1162,6 +1162,7 @@ MonoBehaviour:
     - 
     - 
     - 
+    FirstTime: 1
   playerPrefab: {fileID: 4604768438851740993, guid: ca0a66db74e481644ac3242ba19821ca, type: 3}
 --- !u!1 &621878773
 GameObject:

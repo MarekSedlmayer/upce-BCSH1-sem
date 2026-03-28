@@ -86,23 +86,25 @@ public class MainMenu : MonoBehaviour
         for (int i = 0; i < _numberOfProfiles; i++)
         {
             int index = i;
-            slotButtons[i].GetComponent<Button>().onClick.RemoveAllListeners();
-            deleteButtons[i].GetComponent<Button>().onClick.RemoveAllListeners();
+            Button slotButton = slotButtons[i].GetComponent<Button>();
+            Button deleteButton = deleteButtons[i].GetComponent<Button>();
+            slotButton.onClick.RemoveAllListeners();
+            deleteButton.onClick.RemoveAllListeners();
 
             if (_profiles[i] != null)
             {
-                slotButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = _profiles[i].ProfileName;
-                slotButtons[i].GetComponent<Button>().onClick.AddListener(() => PlayProfile(index));
+                slotButton.GetComponentInChildren<TextMeshProUGUI>().text = _profiles[i].ProfileName;
+                slotButton.onClick.AddListener(() => PlayProfile(index));
 
-                deleteButtons[i].GetComponent<Button>().onClick.AddListener(() => DeleteProfile(index));
-                deleteButtons[i].SetActive(true);
+                deleteButton.onClick.AddListener(() => DeleteProfile(index));
+                deleteButton.interactable = true;
             }
             else
             {
-                slotButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = _defaultSlotString + " " + (i + 1);
-                slotButtons[i].GetComponent<Button>().onClick.AddListener(() => OpenNewProfileMenu(index));
+                slotButton.GetComponentInChildren<TextMeshProUGUI>().text = _defaultSlotString + " " + (i + 1);
+                slotButton.onClick.AddListener(() => OpenNewProfileMenu(index));
 
-                deleteButtons[i].SetActive(false);
+                deleteButton.interactable = false;
             }
         }
     }

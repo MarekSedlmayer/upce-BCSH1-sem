@@ -20,7 +20,7 @@ public class Weapon
         if (Time.time >= _nextFireTime)
         {
             Shoot(position, rotation);
-            _nextFireTime = _weaponData.FireCooldown + Time.time;
+            _nextFireTime = _weaponData.FireCooldown + Time.time + (_weaponData.MaxRandomFireDelay * Random.value);
         }
     }
 

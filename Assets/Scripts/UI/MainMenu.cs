@@ -21,8 +21,6 @@ public class MainMenu : MonoBehaviour
 
     private int _newProfileMenuIndex = -1;
 
-    [SerializeField] private GameManager gameManager;
-
     void Start()
     {
         LoadProfiles();
@@ -31,7 +29,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayProfile(int index)
     {
-        gameManager.ProfileData = _profiles[index];
+        ProfileManager.SetActiveProfile(_profiles[index], index);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
 
     public WeaponContainer[] WeaponContainers => weaponContainers;
+    public event Action<Player> GamePaused;
 
     private InputAction _fireAction;
 
@@ -17,7 +19,7 @@ public class Player : MonoBehaviour
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(input.Get<Vector2>());
 
         float zRotation = Mathf.Atan2(transform.position.y - mousePosition.y, transform.position.x - mousePosition.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, zRotation+90);
+        transform.rotation = Quaternion.Euler(0, 0, zRotation + 90);
 
     }
     void Awake()
@@ -44,5 +46,17 @@ public class Player : MonoBehaviour
                 container.Shoot();
             }
         }
+    }
+    void OnPause()
+    {
+        GamePaused?.Invoke(this);
+    }
+    public void EnablePauseMenuControls()
+    {
+        playerInput.SwitchCurrentActionMap("UI");
+    }
+    public void EnableGameplayControls()
+    {
+        playerInput.SwitchCurrentActionMap("Player");
     }
 }

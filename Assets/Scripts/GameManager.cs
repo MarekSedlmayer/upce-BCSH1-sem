@@ -8,25 +8,48 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PoolManager poolManager;
     [SerializeField] private PlayerSpawner playerSpawner;
     [SerializeField] private WeaponScriptableObject startingWeapon;
+    [SerializeField] private GameObject uiPauseMenuCanvas;
 
-    void Start()
+    private bool _isGamePaused = false;
+    private void OnGamePaused(Player player)
     {
-        if (ProfileManager.Profile != null)
+        _isGamePaused = !_isGamePaused;
+        if (_isGamePaused)
         {
-            GameObject playerObject = playerSpawner.InstantiatePlayerPrefab(ProfileManager.Profile.PlayerPosition);
-            SpawnPlayer(playerObject);
+            Time.timeScale = 0;
+            player.EnablePauseMenuControls();
+            uiPauseMenuCanvas.SetActive(true);
         }
         else
         {
-            GameObject playerObject = playerSpawner.InstantiatePlayerPrefab();
-            LoadStartingWeapons(playerObject.GetComponentInChildren<Player>());
+            Time.timeScale = 1;
+            player.EnableGameplayControls();
+            uiPauseMenuCanvas.SetActive(false);
         }
     }
 
-    private void SpawnPlayer(GameObject playerObject)
+    void Start()
     {
-        Player playerScript = playerObject.GetComponentInChildren<Player>();
+        Player playerScript;
+        if (ProfileManager.Profile != null)
+        {
+            GameObject playerObject = playerSpawner.InstantiatePlayerPrefab(ProfileManager.Profile.PlayerPosition);
+            playerScript = playerObject.GetComponentInChildren<Player>();
 
+            LoadWeapons(playerScript);
+        }
+        else // Debug only
+        {
+            GameObject playerObject = playerSpawner.InstantiatePlayerPrefab();
+            playerScript = playerObject.GetComponentInChildren<Player>();
+
+            LoadStartingWeapons(playerScript);
+        }
+        playerScript.GamePaused += OnGamePaused;
+    }
+
+    private void LoadWeapons(Player playerScript)
+    {
         if (ProfileManager.Profile.FirstTime)
         {
             LoadStartingWeapons(playerScript);

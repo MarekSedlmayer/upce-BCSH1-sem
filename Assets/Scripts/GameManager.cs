@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private WeaponScriptableObject startingWeapon;
     [SerializeField] private GameObject uiPauseMenuCanvas;
 
+    private WeaponFactory _weaponFactory = new WeaponFactory();
     private bool _isGamePaused = false;
     private void OnGamePaused(Player player)
     {
@@ -62,14 +63,14 @@ public class GameManager : MonoBehaviour
             if (!string.IsNullOrEmpty(weaponId))
             {
                 var wSO = weaponDatabase.Get(weaponId);
-                playerScript.WeaponContainers[i].SetWeapon(new Weapon(poolManager.GetPool(weaponId), wSO)); // TODO: WeaponFactory, WeaponType
+                playerScript.WeaponContainers[i].SetWeapon(_weaponFactory.Create(poolManager.GetPool(weaponId), wSO));
             }
         }
     }
 
     private void LoadStartingWeapons(Player playerScript)
     {
-        playerScript.WeaponContainers[0].SetWeapon(new Weapon(poolManager.GetPool(startingWeapon.ID), startingWeapon));
-        playerScript.WeaponContainers[1].SetWeapon(new Weapon(poolManager.GetPool(startingWeapon.ID), startingWeapon));
+        playerScript.WeaponContainers[0].SetWeapon(_weaponFactory.Create(poolManager.GetPool(startingWeapon.ID), startingWeapon));
+        playerScript.WeaponContainers[1].SetWeapon(_weaponFactory.Create(poolManager.GetPool(startingWeapon.ID), startingWeapon));
     }
 }

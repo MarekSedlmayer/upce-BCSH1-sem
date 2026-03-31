@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class WeaponContainer : MonoBehaviour
 {
-    private Weapon _weapon;
+    private IWeapon _weapon;
 
-    public void SetWeapon(Weapon weapon)
+    public void SetWeapon(IWeapon weapon)
     {
         _weapon = weapon;
     }

@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon
+public class Minigun : IWeapon
 {
     private readonly ObjectPool _bulletPool;
     private readonly WeaponScriptableObject _weaponData;
 
-    public Weapon(ObjectPool bulletPool, WeaponScriptableObject weaponData)
+    public Minigun(ObjectPool bulletPool, WeaponScriptableObject weaponData)
     {
         _bulletPool = bulletPool;
         _weaponData = weaponData;

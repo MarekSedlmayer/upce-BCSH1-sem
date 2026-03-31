@@ -6,6 +6,7 @@ public class Minigun : IWeapon
 {
     private readonly ObjectPool _bulletPool;
     private readonly WeaponScriptableObject _weaponData;
+    public WeaponScriptableObject GetWeaponData() => _weaponData;
 
     public Minigun(ObjectPool bulletPool, WeaponScriptableObject weaponData)
     {

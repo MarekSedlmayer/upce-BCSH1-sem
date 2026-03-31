@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class WeaponContainer : MonoBehaviour
 {
-    private IWeapon _weapon;
-
-    public void SetWeapon(IWeapon weapon)
-    {
-        _weapon = weapon;
-    }
+    public IWeapon Weapon;
 
     public void Shoot()
     {
-        if (_weapon != null)
+        if (Weapon != null)
         {
-            _weapon.TryShoot(transform.position, transform.rotation);
+            Weapon.TryShoot(transform.position, transform.rotation);
         }
     }
 }

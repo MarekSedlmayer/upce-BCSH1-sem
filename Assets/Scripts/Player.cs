@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private WeaponContainer[] weaponContainers = new WeaponContainer[2];
+    [SerializeField] private WeaponContainer[] weaponContainers = new WeaponContainer[4];
     [SerializeField] private PlayerInput playerInput;
 
     public WeaponContainer[] WeaponContainers => weaponContainers;

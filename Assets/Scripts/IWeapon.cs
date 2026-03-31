@@ -2,6 +2,7 @@ using UnityEngine;
 
 public interface IWeapon
 {
+    public WeaponScriptableObject GetWeaponData();
     /// <summary>
     /// Attempts to fire the weapon. Fails silently if the weapon is not ready.
     /// </summary>

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// Handles IO.
@@ -15,6 +16,11 @@ public static class ProfileManager
     private static readonly string _wildCardString = "*";
     private static readonly string _fileExtension = ".txt";
     private static readonly string _profileFileName = "profile_" + _wildCardString + _fileExtension;
+
+    public static void SaveActiveProfile()
+    {
+        SaveProfile(Profile, _index);
+    }
 
     public static void SetActiveProfile(ProfileData profile, int index)
     {

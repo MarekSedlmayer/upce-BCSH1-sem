@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerSpawner playerSpawner;
     [SerializeField] private WeaponScriptableObject startingWeapon;
     [SerializeField] private GameObject uiPauseMenuCanvas;
+    [SerializeField] private InventoryUI inventoryUI;
 
     private GameObject _activePlayerObject;
     private readonly WeaponFactory _weaponFactory = new WeaponFactory();
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
 
             LoadStartingWeapons(playerScript);
         }
+        inventoryUI.Init(playerScript);
         playerScript.GamePaused += OnGamePaused;
     }
 

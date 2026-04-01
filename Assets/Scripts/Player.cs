@@ -14,6 +14,35 @@ public class Player : MonoBehaviour
 
     private InputAction _fireAction;
 
+    private List<IWeapon> _inventory = new List<IWeapon>();
+    public List<IWeapon> Inventory => _inventory;
+
+    public bool TryActivateWeapon(IWeapon weapon) {
+        for (int i = 0; i < weaponContainers.Length; i++)
+        {
+            if (weaponContainers[i].Weapon == null)
+            {
+                weaponContainers[i].Weapon = weapon;
+                _inventory.Remove(weapon);
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool TryDeactivateWeapon(IWeapon weapon)
+    {
+        for (int i = 0; i < weaponContainers.Length; i++)
+        {
+            if (weaponContainers[i].Weapon == weapon)
+            {
+                _inventory.Add(weapon);
+                weaponContainers[i].Weapon = null;
+                return true;
+            }
+        }
+        return false;
+    }
+
     void OnLook(InputValue input)
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(input.Get<Vector2>());

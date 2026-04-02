@@ -66,6 +66,13 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        foreach(string weaponId in ProfileManager.Profile.Inventory)
+        {
+            var pool = poolManager.GetPool(weaponId);
+            var wSO = weaponDatabase.Get(weaponId);
+            playerScript.Inventory.Add(_weaponFactory.Create(pool, wSO));
+        }
+
         for (int i = 0; i < playerScript.WeaponContainers.Length; i++)
         {
             string weaponId = ProfileManager.Profile.WeaponsInUse[i];
@@ -92,6 +99,8 @@ public class GameManager : MonoBehaviour
             ProfileManager.Profile.PlayerPosition = _activePlayerObject.transform.position;
             ProfileManager.Profile.WeaponsInUse = playerScript.WeaponContainers.Select(w => w.Weapon != null ? w.Weapon.GetWeaponData().ID : "").ToArray();
             ProfileManager.Profile.FirstTime = false;
+
+            ProfileManager.Profile.Inventory = playerScript.Inventory.Select(w => w.GetWeaponData().ID).ToList();
 
             ProfileManager.SaveActiveProfile();
         }

@@ -6,6 +6,8 @@ public class Room : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _visibleEnemies = new List<GameObject>();
     [SerializeField] private GameObject mainCamera;
+    [SerializeField] private RoomScriptableObject roomSO;
+    public string GetID() => roomSO.ID;
 
     [Header("Connected rooms")]
     [SerializeField] private Room roomTop;
@@ -19,7 +21,10 @@ public class Room : MonoBehaviour
     [SerializeField] private Door doorRight;
 
     private bool _isEmpty; // All visible enemies are gone.
-    //private bool _isPlayerIn = false;
+    private bool _isPlayerIn = false;
+    public bool IsEmpty => _isEmpty;
+    public bool IsPlayerIn => _isPlayerIn;
+
 
     void Awake()
     {
@@ -69,12 +74,12 @@ public class Room : MonoBehaviour
 
     public void PlayerLeft()
     {
-        //_isPlayerIn = false;
+        _isPlayerIn = false;
     }
     public void PlayerEntered()
     {
         mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, mainCamera.transform.position.z);
-        //_isPlayerIn = true;
+        _isPlayerIn = true;
         UpdateRoom();
     }
 }

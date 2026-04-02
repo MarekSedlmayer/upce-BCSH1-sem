@@ -7,11 +7,14 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private WeaponDatabase weaponDatabase;
+    [SerializeField] private RoomDatabase roomDatabase;
     [SerializeField] private PoolManager poolManager;
     [SerializeField] private PlayerSpawner playerSpawner;
     [SerializeField] private WeaponScriptableObject startingWeapon;
     [SerializeField] private GameObject uiPauseMenuCanvas;
     [SerializeField] private InventoryUI inventoryUI;
+
+    [SerializeField] private RoomScriptableObject startingRoom;
 
     private GameObject _activePlayerObject;
     private readonly WeaponFactory _weaponFactory = new WeaponFactory();
@@ -45,6 +48,15 @@ public class GameManager : MonoBehaviour
             _activePlayerObject = playerSpawner.InstantiatePlayerPrefab(ProfileManager.Profile.PlayerPosition);
             playerScript = _activePlayerObject.GetComponentInChildren<Player>();
 
+            if (!string.IsNullOrEmpty(ProfileManager.Profile.lastVisitedRoomID))
+            {
+                roomDatabase.Get(ProfileManager.Profile.lastVisitedRoomID).PlayerEntered();
+            }
+            else
+            {
+                roomDatabase.Get(startingRoom.ID).PlayerEntered();
+            }
+
             LoadWeapons(playerScript);
         }
         else // Debug only
@@ -66,7 +78,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        foreach(string weaponId in ProfileManager.Profile.Inventory)
+        foreach (string weaponId in ProfileManager.Profile.Inventory)
         {
             var pool = poolManager.GetPool(weaponId);
             var wSO = weaponDatabase.Get(weaponId);
@@ -101,6 +113,10 @@ public class GameManager : MonoBehaviour
             ProfileManager.Profile.FirstTime = false;
 
             ProfileManager.Profile.Inventory = playerScript.Inventory.Select(w => w.GetWeaponData().ID).ToList();
+
+            var items = roomDatabase.GetEmptyRoomIDsAndLastVisitedRoomID();
+            ProfileManager.Profile.clearedRooms = items.Item1;
+            ProfileManager.Profile.lastVisitedRoomID = items.Item2;
 
             ProfileManager.SaveActiveProfile();
         }

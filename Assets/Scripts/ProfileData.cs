@@ -11,4 +11,7 @@ public class ProfileData
     public string[] WeaponsInUse = new string[4];
     public bool FirstTime = true;
     public List<string> Inventory;
+
+    public string lastVisitedRoomID;
+    public List<string> clearedRooms;
 }

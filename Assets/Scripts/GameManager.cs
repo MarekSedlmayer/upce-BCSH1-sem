@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
             _activePlayerObject = playerSpawner.InstantiatePlayerPrefab(ProfileManager.Profile.PlayerPosition);
             playerScript = _activePlayerObject.GetComponentInChildren<Player>();
 
+            roomDatabase.SetEmptyRooms(ProfileManager.Profile.clearedRooms);
+            LoadWeapons(playerScript);
             if (!string.IsNullOrEmpty(ProfileManager.Profile.lastVisitedRoomID))
             {
                 roomDatabase.Get(ProfileManager.Profile.lastVisitedRoomID).PlayerEntered();
@@ -55,9 +57,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 roomDatabase.Get(startingRoom.ID).PlayerEntered();
-            }
-
-            LoadWeapons(playerScript);
+            } 
         }
         else // Debug only
         {

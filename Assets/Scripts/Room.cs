@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,11 +21,16 @@ public class Room : MonoBehaviour
     [SerializeField] private Door doorLeft;
     [SerializeField] private Door doorRight;
 
-    private bool _isEmpty; // All visible enemies are gone.
+    private bool _isCleared; // All visible enemies are gone.
     private bool _isPlayerIn = false;
-    public bool IsEmpty => _isEmpty;
+
+    public bool IsCleared => _isCleared;
     public bool IsPlayerIn => _isPlayerIn;
 
+    public void SetCleared(bool isCleared)
+    {
+        _isCleared = isCleared;
+    }
 
     void Awake()
     {
@@ -40,19 +46,18 @@ public class Room : MonoBehaviour
     void Start()
     {
         OpenDoors();
+        if (_visibleEnemies.Count == 0)
+            _isCleared = true;
     }
 
-    void UpdateRoom()
+    private void OnEnemyDestroyed(Destroyable destroyable)
     {
-        _isEmpty = _visibleEnemies.Count == 0;
-
-        if (_isEmpty)
+        destroyable.gameObject.SetActive(false);
+        _visibleEnemies.Remove(destroyable.gameObject);
+        if (_visibleEnemies.Count == 0)
         {
+            _isCleared = true;
             OpenDoors();
-        }
-        else
-        {
-            CloseDoors();
         }
     }
 
@@ -80,6 +85,19 @@ public class Room : MonoBehaviour
     {
         mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, mainCamera.transform.position.z);
         _isPlayerIn = true;
-        UpdateRoom();
+
+        if (!_isCleared)
+        {
+            CloseDoors();
+            foreach (var enemy in _visibleEnemies)
+            {
+                enemy.SetActive(true);
+                enemy.GetComponent<Destroyable>().Destroyed += OnEnemyDestroyed;
+            }
+        }
+        else
+        {
+            OpenDoors();
+        }
     }
 }

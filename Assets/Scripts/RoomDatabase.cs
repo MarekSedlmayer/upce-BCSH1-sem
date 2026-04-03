@@ -23,7 +23,7 @@ public class RoomDatabase : MonoBehaviour
 
         foreach (var room in rooms)
         {
-            if (room.IsEmpty)
+            if (room.IsCleared)
             {
                 allEmptyRooms.Add(room.GetID());
             }
@@ -33,5 +33,13 @@ public class RoomDatabase : MonoBehaviour
             }
         }
         return (allEmptyRooms, lastVisitedRoomByPlayer);
+    }
+
+    public void SetEmptyRooms(List<string> ids)
+    {
+        foreach (string id in ids)
+        {
+            Get(id).SetCleared(true);
+        }
     }
 }

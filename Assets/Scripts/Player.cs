@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -11,13 +12,15 @@ public class Player : MonoBehaviour
 
     public WeaponContainer[] WeaponContainers => weaponContainers;
     public event Action<Player> GamePaused;
+    public event Action<Player> PlayerDestroyed;
 
     private InputAction _fireAction;
 
     private List<IWeapon> _inventory = new List<IWeapon>();
     public List<IWeapon> Inventory => _inventory;
 
-    public bool TryActivateWeapon(IWeapon weapon) {
+    public bool TryActivateWeapon(IWeapon weapon)
+    {
         for (int i = 0; i < weaponContainers.Length; i++)
         {
             if (weaponContainers[i].Weapon == null)
@@ -41,6 +44,23 @@ public class Player : MonoBehaviour
             }
         }
         return false;
+    }
+    private Image _healthBar;
+    private readonly float _maxHealth = 3;
+    private float _health = 3;
+    public void TakeDamage(float damage)
+    {
+        _health -= damage;
+        _healthBar.fillAmount = _health / _maxHealth;
+        if (_health <= 0)
+        {
+            PlayerDestroyed?.Invoke(this);
+        }
+    }
+    public void SetHealthBarRef(GameObject obj)
+    {
+        _healthBar = obj.GetComponent<Image>();
+        _healthBar.fillAmount = _health / _maxHealth;
     }
 
     void OnLook(InputValue input)

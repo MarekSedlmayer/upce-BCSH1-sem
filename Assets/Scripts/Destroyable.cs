@@ -9,6 +9,7 @@ public class Destroyable : MonoBehaviour
     [SerializeField] private float health;
     [SerializeField] private bool destroyObject = false;
     public event Action<Destroyable> Destroyed;
+    public float Health => health;
 
     public void TakeDamage(float damage)
     {

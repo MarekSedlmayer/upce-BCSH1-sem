@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PoolManager poolManager;
     [SerializeField] private PlayerSpawner playerSpawner;
     [SerializeField] private WeaponScriptableObject startingWeapon;
-    [SerializeField] private GameObject uiPauseMenuCanvas;
+    [SerializeField] private GameObject uiPauseMenu;
+    [SerializeField] private GameObject uiHealthBar;
     [SerializeField] private InventoryUI inventoryUI;
 
     [SerializeField] private RoomScriptableObject startingRoom;
@@ -29,18 +30,23 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         player.EnablePauseMenuControls();
-        uiPauseMenuCanvas.SetActive(true);
+        uiPauseMenu.SetActive(true);
         _isGamePaused = true;
     }
     public void ResumeGame(Player player)
     {
         Time.timeScale = 1;
         player.EnableGameplayControls();
-        uiPauseMenuCanvas.SetActive(false);
+        uiPauseMenu.SetActive(false);
         _isGamePaused = false;
     }
 
     void Start()
+    {
+        CreatePlayerFromProfile();
+    }
+
+    private void CreatePlayerFromProfile()
     {
         Player playerScript;
         if (ProfileManager.Profile != null)
@@ -57,7 +63,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 roomDatabase.Get(startingRoom.ID).PlayerEntered();
-            } 
+            }
         }
         else // Debug only
         {
@@ -68,6 +74,13 @@ public class GameManager : MonoBehaviour
         }
         inventoryUI.Init(playerScript);
         playerScript.GamePaused += OnGamePaused;
+        playerScript.PlayerDestroyed += OnPlayerDestroyed;
+        playerScript.SetHealthBarRef(uiHealthBar);
+    }
+
+    private void OnPlayerDestroyed(Player playerScript)
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void LoadWeapons(Player playerScript)

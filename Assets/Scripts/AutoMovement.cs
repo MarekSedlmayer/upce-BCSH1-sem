@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class AutoMovement : MonoBehaviour
 {
+    [SerializeField] private float damage = 1f;
     [SerializeField] private float movementSpeed = 250f;
     private GameObject player;
     private Vector2 _targetPosition;
@@ -14,6 +15,8 @@ public class AutoMovement : MonoBehaviour
     private LineRenderer _lineRenderer;
 
     private bool _ignorePlayer;
+    private bool _destroyed = false;
+    public bool debug = false;
 
     void Awake()
     {
@@ -44,22 +47,32 @@ public class AutoMovement : MonoBehaviour
         if (Vector2.Distance(_targetPosition, transform.position) > 0.05f)
             _rigidbody2D.AddForce(_movementVector * movementSpeed);
         #region Render debug line
-        _lineRenderer.SetPosition(0, transform.position);
-        _lineRenderer.SetPosition(1, _targetPosition);
+        if (debug)
+        {
+            _lineRenderer.SetPosition(0, transform.position);
+            _lineRenderer.SetPosition(1, _targetPosition);
+        }
         #endregion
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (!collision.gameObject.TryGetComponent<PlayerMovement>(out var player))
+        if (collision.gameObject.TryGetComponent<PlayerMovement>(out var player))
         {
-            if (!_ignorePlayer)
+            if (!_destroyed)
             {
-                StartCoroutine(FindAnotherPath(Random.value + 0.5f, collision.GetContact(0).normal));
+                _destroyed = true;
+                player.gameObject.GetComponentInChildren<Player>().TakeDamage(damage);
+                var des = GetComponent<Destroyable>();
+                des.TakeDamage(des.Health);
             }
         }
         else
         {
-            // Damage player
+            if (!_ignorePlayer)
+            {
+                if (!isActiveAndEnabled) return;
+                StartCoroutine(FindAnotherPath(Random.value + 0.5f, collision.GetContact(0).normal));
+            }
         }
     }
 

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RoomDatabase roomDatabase;
     [SerializeField] private PoolManager poolManager;
     [SerializeField] private PlayerSpawner playerSpawner;
-    [SerializeField] private WeaponScriptableObject startingWeapon;
+    [SerializeField] private WeaponScriptableObject[] startingWeapons = new WeaponScriptableObject[4];
     [SerializeField] private GameObject uiPauseMenu;
     [SerializeField] private GameObject uiHealthBar;
     [SerializeField] private InventoryUI inventoryUI;
@@ -112,8 +112,11 @@ public class GameManager : MonoBehaviour
 
     private void LoadStartingWeapons(Player playerScript)
     {
-        playerScript.WeaponContainers[0].Weapon = _weaponFactory.Create(poolManager.GetPool(startingWeapon.ID), startingWeapon);
-        playerScript.WeaponContainers[1].Weapon = _weaponFactory.Create(poolManager.GetPool(startingWeapon.ID), startingWeapon);
+        for (int i = 0; i < startingWeapons.Length; i++)
+        {
+            if (startingWeapons[i] != null)
+                playerScript.WeaponContainers[i].Weapon = _weaponFactory.Create(poolManager.GetPool(startingWeapons[i].ID), startingWeapons[i]);
+        }
     }
 
     public void SavePlayerStateAndQuit()

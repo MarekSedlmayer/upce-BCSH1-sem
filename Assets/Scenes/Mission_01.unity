@@ -715,7 +715,11 @@ MonoBehaviour:
   roomDatabase: {fileID: 797796325}
   poolManager: {fileID: 1506394926}
   playerSpawner: {fileID: 1686224982}
-  startingWeapon: {fileID: 11400000, guid: d72bf8f16f4072c4f85109acceac682a, type: 2}
+  startingWeapons:
+  - {fileID: 11400000, guid: 233104607aba78649a313645790b2dad, type: 2}
+  - {fileID: 11400000, guid: 233104607aba78649a313645790b2dad, type: 2}
+  - {fileID: 11400000, guid: d72bf8f16f4072c4f85109acceac682a, type: 2}
+  - {fileID: 11400000, guid: d72bf8f16f4072c4f85109acceac682a, type: 2}
   uiPauseMenu: {fileID: 823310812}
   uiHealthBar: {fileID: 675218383}
   inventoryUI: {fileID: 1841589363}
@@ -1408,6 +1412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSOs:
   - {fileID: 11400000, guid: d72bf8f16f4072c4f85109acceac682a, type: 2}
+  - {fileID: 11400000, guid: 233104607aba78649a313645790b2dad, type: 2}
 --- !u!4 &636940646
 Transform:
   m_ObjectHideFlags: 0

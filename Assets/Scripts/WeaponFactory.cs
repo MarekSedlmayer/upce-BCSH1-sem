@@ -10,7 +10,7 @@ public class WeaponFactory
         return wso.WeaponType switch
         {
             WeaponType.Minigun => new Minigun(pool, wso),
-            WeaponType.Shotgun => throw new NotImplementedException(),
+            WeaponType.Shotgun => new Shotgun(pool, wso),
             WeaponType.RocketLauncher => throw new NotImplementedException(),
             _ => throw new NotImplementedException(),
         };

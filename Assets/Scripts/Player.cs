@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -61,6 +62,19 @@ public class Player : MonoBehaviour
     {
         _healthBar = obj.GetComponent<Image>();
         _healthBar.fillAmount = _health / _maxHealth;
+    }
+    private TextMeshProUGUI _scoreCounter;
+    private int _score = 0;
+    public int Score => _score;
+    public void AddScore(int score)
+    {
+        _score += score;
+        _scoreCounter.text = "Score: " + _score;
+    }
+    
+    public void SetScoreCounterRef(GameObject obj)
+    {
+        _scoreCounter = obj.GetComponent<TextMeshProUGUI>();
     }
 
     void OnLook(InputValue input)

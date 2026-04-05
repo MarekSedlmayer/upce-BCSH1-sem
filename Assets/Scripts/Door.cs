@@ -33,10 +33,10 @@ public class Door : MonoBehaviour
         if (teleporter != null) teleporter.PlayerTeleported += OnPlayerTeleported;
     }
 
-    private void OnPlayerTeleported(Teleporter t)
+    private void OnPlayerTeleported(Teleporter t, PlayerMovement pm)
     {
         ParentRoom.PlayerLeft();
-        AdjacentRoom.PlayerEntered();
+        AdjacentRoom.PlayerEntered(pm.gameObject);
     }
 
     public void Open()

@@ -11,13 +11,19 @@ public class Destroyable : MonoBehaviour
     public event Action<Destroyable> Destroyed;
     public float Health => health;
 
+    private bool _destroyed = false;
+
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        if (health <= 0)
+        if (!_destroyed)
         {
-            Destroyed?.Invoke(this);
-            if (destroyObject) Destroy(gameObject);
+            health -= damage;
+            if (health <= 0)
+            {
+                Destroyed?.Invoke(this);
+                if (destroyObject) Destroy(gameObject);
+                _destroyed = true;
+            }
         }
     }
 }

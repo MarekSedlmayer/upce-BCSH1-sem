@@ -27,6 +27,8 @@ public class Room : MonoBehaviour
     public bool IsCleared => _isCleared;
     public bool IsPlayerIn => _isPlayerIn;
 
+    private Player _playerScript = null;
+
     public void SetCleared(bool isCleared)
     {
         _isCleared = isCleared;
@@ -54,6 +56,9 @@ public class Room : MonoBehaviour
     {
         destroyable.gameObject.SetActive(false);
         _visibleEnemies.Remove(destroyable.gameObject);
+
+        _playerScript.AddScore(5);
+
         if (_visibleEnemies.Count == 0)
         {
             _isCleared = true;
@@ -81,11 +86,15 @@ public class Room : MonoBehaviour
     {
         _isPlayerIn = false;
     }
-    public void PlayerEntered()
+    public void PlayerEntered(GameObject playerObject)
     {
         mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, mainCamera.transform.position.z);
         _isPlayerIn = true;
 
+        if (_playerScript == null)
+        {
+            _playerScript = playerObject.GetComponentInChildren<Player>();
+        }
         if (!_isCleared)
         {
             CloseDoors();

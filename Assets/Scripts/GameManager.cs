@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject uiPauseMenu;
     [SerializeField] private GameObject uiHealthBar;
     [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private GameObject uiScoreCounter;
 
     [SerializeField] private RoomScriptableObject startingRoom;
 
@@ -54,15 +55,16 @@ public class GameManager : MonoBehaviour
             _activePlayerObject = playerSpawner.InstantiatePlayerPrefab(ProfileManager.Profile.PlayerPosition);
             playerScript = _activePlayerObject.GetComponentInChildren<Player>();
 
-            roomDatabase.SetEmptyRooms(ProfileManager.Profile.clearedRooms);
+            playerScript.AddScore(ProfileManager.Profile.Score);
+            roomDatabase.SetEmptyRooms(ProfileManager.Profile.ClearedRooms);
             LoadWeapons(playerScript);
-            if (!string.IsNullOrEmpty(ProfileManager.Profile.lastVisitedRoomID))
+            if (!string.IsNullOrEmpty(ProfileManager.Profile.LastVisitedRoomID))
             {
-                roomDatabase.Get(ProfileManager.Profile.lastVisitedRoomID).PlayerEntered();
+                roomDatabase.Get(ProfileManager.Profile.LastVisitedRoomID).PlayerEntered(_activePlayerObject);
             }
             else
             {
-                roomDatabase.Get(startingRoom.ID).PlayerEntered();
+                roomDatabase.Get(startingRoom.ID).PlayerEntered(_activePlayerObject);
             }
         }
         else // Debug only
@@ -76,6 +78,7 @@ public class GameManager : MonoBehaviour
         playerScript.GamePaused += OnGamePaused;
         playerScript.PlayerDestroyed += OnPlayerDestroyed;
         playerScript.SetHealthBarRef(uiHealthBar);
+        playerScript.SetScoreCounterRef(uiScoreCounter);
     }
 
     private void OnPlayerDestroyed(Player playerScript)
@@ -128,11 +131,12 @@ public class GameManager : MonoBehaviour
             ProfileManager.Profile.WeaponsInUse = playerScript.WeaponContainers.Select(w => w.Weapon != null ? w.Weapon.GetWeaponData().ID : "").ToArray();
             ProfileManager.Profile.FirstTime = false;
 
+            ProfileManager.Profile.Score = playerScript.Score;
             ProfileManager.Profile.Inventory = playerScript.Inventory.Select(w => w.GetWeaponData().ID).ToList();
 
             var items = roomDatabase.GetEmptyRoomIDsAndLastVisitedRoomID();
-            ProfileManager.Profile.clearedRooms = items.Item1;
-            ProfileManager.Profile.lastVisitedRoomID = items.Item2;
+            ProfileManager.Profile.ClearedRooms = items.Item1;
+            ProfileManager.Profile.LastVisitedRoomID = items.Item2;
 
             ProfileManager.SaveActiveProfile();
         }

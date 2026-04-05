@@ -12,6 +12,8 @@ public class ProfileData
     public bool FirstTime = true;
     public List<string> Inventory;
 
-    public string lastVisitedRoomID;
-    public List<string> clearedRooms;
+    public string LastVisitedRoomID;
+    public List<string> ClearedRooms;
+
+    public int Score;
 }

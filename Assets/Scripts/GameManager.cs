@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
             _activePlayerObject = playerSpawner.InstantiatePlayerPrefab(ProfileManager.Profile.PlayerPosition);
             playerScript = _activePlayerObject.GetComponentInChildren<Player>();
 
+            playerScript.SetScoreCounterRef(uiScoreCounter);
             playerScript.AddScore(ProfileManager.Profile.Score);
             roomDatabase.SetEmptyRooms(ProfileManager.Profile.ClearedRooms);
             LoadWeapons(playerScript);
@@ -73,12 +74,13 @@ public class GameManager : MonoBehaviour
             playerScript = _activePlayerObject.GetComponentInChildren<Player>();
 
             LoadStartingWeapons(playerScript);
+            playerScript.SetScoreCounterRef(uiScoreCounter);
         }
         inventoryUI.Init(playerScript);
         playerScript.GamePaused += OnGamePaused;
         playerScript.PlayerDestroyed += OnPlayerDestroyed;
         playerScript.SetHealthBarRef(uiHealthBar);
-        playerScript.SetScoreCounterRef(uiScoreCounter);
+        
     }
 
     private void OnPlayerDestroyed(Player playerScript)

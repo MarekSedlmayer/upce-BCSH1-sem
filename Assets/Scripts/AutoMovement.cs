@@ -16,7 +16,8 @@ public class AutoMovement : MonoBehaviour
 
     private bool _ignorePlayer;
     private bool _destroyed = false;
-    public bool debug = false;
+    public bool Debug = false;
+    public bool IsShooter = false;
 
     void Awake()
     {
@@ -41,13 +42,21 @@ public class AutoMovement : MonoBehaviour
     {
         if (player != null && !_ignorePlayer)
         {
-            _targetPosition = player.transform.position;
+            if (!IsShooter)
+            {
+                _targetPosition = player.transform.position;
+            }
+            else
+            {
+                if (!isActiveAndEnabled) return;
+                StartCoroutine(FindAnotherPath(Random.value + 0.5f));
+            }
         }
         _movementVector = (_targetPosition - (Vector2)transform.position).normalized;
         if (Vector2.Distance(_targetPosition, transform.position) > 0.05f)
             _rigidbody2D.AddForce(_movementVector * movementSpeed);
         #region Render debug line
-        if (debug)
+        if (Debug)
         {
             _lineRenderer.SetPosition(0, transform.position);
             _lineRenderer.SetPosition(1, _targetPosition);
@@ -85,6 +94,21 @@ public class AutoMovement : MonoBehaviour
         Vector2 randomVector = (Vector2.Perpendicular(collisionNormal) * signedRandomValue) * distortionFactor;
         _targetPosition = (collisionNormal + randomVector) + (Vector2)transform.position;
 
+        float elapsed = 0f;
+        while (elapsed < seconds)
+        {
+            if (Vector2.Distance(_targetPosition, transform.position) < 0.05f) break;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        _ignorePlayer = false;
+    }
+
+    IEnumerator FindAnotherPath(float seconds)
+    {
+        _ignorePlayer = true;
+        _targetPosition = Random.insideUnitCircle * 2 + (Vector2)transform.position;
+        
         float elapsed = 0f;
         while (elapsed < seconds)
         {

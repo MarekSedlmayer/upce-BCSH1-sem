@@ -37,10 +37,25 @@ public class Bullet : MonoBehaviour
     {
         _rigidbody2D.velocity = Vector2.zero;
     }
-
+    public bool IsEnemyBullet = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<PlayerMovement>(out var player) || collision.isTrigger) return;
+        if (!IsEnemyBullet)
+        {
+            if (collision.TryGetComponent<PlayerMovement>(out var player) || collision.isTrigger) return;
+        }
+        else
+        {
+            if (collision.TryGetComponent<AutoMovement>(out var autoMovement) || collision.TryGetComponent<AutoTurret>(out var autoTurret)) return;
+            if (collision.isTrigger) return;
+
+            if (collision.TryGetComponent<PlayerMovement>(out var player))
+            {
+                player.GetComponentInChildren<Player>().TakeDamage(_damage);
+                CancelInvoke(nameof(Disable));
+                Disable();
+            }
+        }
         if (collision.TryGetComponent<Destroyable>(out var destroyable))
         {
             destroyable.TakeDamage(_damage);

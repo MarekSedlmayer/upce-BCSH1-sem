@@ -44,12 +44,13 @@ public class Room : MonoBehaviour
         doorLeft.AdjacentRoom = roomLeft;
         doorRight.ParentRoom = this;
         doorRight.AdjacentRoom = roomRight;
+
+        if (_visibleEnemies.Count == 0)
+            _isCleared = true;
     }
     void Start()
     {
         OpenDoors();
-        if (_visibleEnemies.Count == 0)
-            _isCleared = true;
     }
 
     private void OnEnemyDestroyed(Destroyable destroyable)
@@ -62,6 +63,7 @@ public class Room : MonoBehaviour
         if (_visibleEnemies.Count == 0)
         {
             _isCleared = true;
+            _playerScript.IsInEmptyRoom = IsCleared;
             OpenDoors();
         }
     }
@@ -95,6 +97,9 @@ public class Room : MonoBehaviour
         {
             _playerScript = playerObject.GetComponentInChildren<Player>();
         }
+        if (_visibleEnemies.Count == 0)
+            _isCleared = true;
+        _playerScript.IsInEmptyRoom = IsCleared;
         if (!_isCleared)
         {
             CloseDoors();

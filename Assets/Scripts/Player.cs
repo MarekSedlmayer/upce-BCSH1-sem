@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private WeaponContainer[] weaponContainers = new WeaponContainer[4];
     [SerializeField] private PlayerInput playerInput;
-
+    public bool IsInEmptyRoom = true;
     public WeaponContainer[] WeaponContainers => weaponContainers;
     public event Action<Player> GamePaused;
     public event Action<Player> PlayerDestroyed;

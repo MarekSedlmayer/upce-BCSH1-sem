@@ -37,8 +37,10 @@ public class RoomDatabase : MonoBehaviour
 
     public void SetEmptyRooms(List<string> ids)
     {
+        if (ids == null) return;
         foreach (string id in ids)
         {
+            if (string.IsNullOrEmpty(id)) continue;
             Get(id).SetCleared(true);
         }
     }

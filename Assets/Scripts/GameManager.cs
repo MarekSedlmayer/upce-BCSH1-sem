@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject uiHealthBar;
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private GameObject uiScoreCounter;
+    [SerializeField] private Button uiQuitButton;
 
     [SerializeField] private RoomScriptableObject startingRoom;
 
@@ -32,6 +34,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         player.EnablePauseMenuControls();
         uiPauseMenu.SetActive(true);
+        uiQuitButton.interactable = player.IsInEmptyRoom;
         _isGamePaused = true;
     }
     public void ResumeGame(Player player)
@@ -80,7 +83,7 @@ public class GameManager : MonoBehaviour
         playerScript.GamePaused += OnGamePaused;
         playerScript.PlayerDestroyed += OnPlayerDestroyed;
         playerScript.SetHealthBarRef(uiHealthBar);
-        
+
     }
 
     private void OnPlayerDestroyed(Player playerScript)

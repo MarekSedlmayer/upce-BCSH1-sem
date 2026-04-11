@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <remarks>
 /// Requires 2 Collider2D components (trigger and non-trigger)
@@ -38,13 +39,15 @@ public class Door : MonoBehaviour
         ParentRoom.PlayerLeft();
         AdjacentRoom.PlayerEntered(pm.gameObject);
     }
-
+    public UnityEvent DoorOpened;
+    public UnityEvent DoorClosed;
     public void Open()
     {
         if (!isLocked && !_isOpen)
         {
             _doorCollider.enabled = false;
             _isOpen = true;
+            DoorOpened?.Invoke();
         }
     }
 
@@ -54,6 +57,7 @@ public class Door : MonoBehaviour
         {
             _doorCollider.enabled = true;
             _isOpen = false;
+            DoorClosed?.Invoke();
         }
     }
 

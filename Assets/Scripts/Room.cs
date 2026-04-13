@@ -45,6 +45,11 @@ public class Room : MonoBehaviour
         doorRight.ParentRoom = this;
         doorRight.AdjacentRoom = roomRight;
 
+        if (roomTop == null) doorTop.Hide();
+        if (roomBottom == null) doorBottom.Hide();
+        if (roomLeft == null) doorLeft.Hide();
+        if (roomRight == null) doorRight.Hide();
+
         if (_visibleEnemies.Count == 0)
             _isCleared = true;
     }

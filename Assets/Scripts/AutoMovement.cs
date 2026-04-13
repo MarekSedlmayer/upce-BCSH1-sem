@@ -118,4 +118,16 @@ public class AutoMovement : MonoBehaviour
         }
         _ignorePlayer = false;
     }
+    void Update()
+    {
+        if (UnityEngine.InputSystem.Keyboard.current.kKey.wasPressedThisFrame)
+        {
+            Debug = !Debug;
+            if (!Debug)
+            {
+                _lineRenderer.SetPosition(0, Vector3.zero);
+                _lineRenderer.SetPosition(1, Vector3.zero);
+            }
+        }
+    }
 }

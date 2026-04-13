@@ -23,6 +23,7 @@ public class Door : MonoBehaviour
     public Room AdjacentRoom;
 
     [SerializeField] private Teleporter teleporter;
+    [SerializeField] private GameObject textureHolder;
 
     void Awake()
     {
@@ -64,5 +65,10 @@ public class Door : MonoBehaviour
     public void Unlock()
     {
         isLocked = false;
+    }
+
+    public void Hide()
+    {
+        textureHolder.SetActive(false);
     }
 }

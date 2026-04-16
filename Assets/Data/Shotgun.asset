@@ -19,5 +19,5 @@ MonoBehaviour:
   fireCooldown: 1
   maxRandomFireDelay: 0.1
   weaponType: 1
-  bulletPrefab: {fileID: 4473169755775791503, guid: fa15eb2fdf3c3854f876002f393556ff, type: 3}
+  bulletPrefab: {fileID: 4473169755775791503, guid: c2d19161c69715d4fbe363465898b9c3, type: 3}
   bulletPoolInitialSize: 10

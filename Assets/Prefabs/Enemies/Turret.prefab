@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 929088303185604425}
   - component: {fileID: 929088303185604430}
   - component: {fileID: 929088303185604431}
+  - component: {fileID: 4824069400424162603}
   - component: {fileID: 929088303185604429}
   m_Layer: 0
   m_Name: Turret
@@ -213,6 +214,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   destroyObject: 0
+  DestroyedEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4824069400424162603}
+        m_TargetAssemblyTypeName: ParticleSpawner, Assembly-CSharp
+        m_MethodName: Spawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4824069400424162603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929088303185604466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c20df7fe303eed49a934c6240374f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 9213896933875042011, guid: 4f35846dcd817ca49aeac1d9d42ed4c1, type: 3}
 --- !u!114 &929088303185604429
 MonoBehaviour:
   m_ObjectHideFlags: 0

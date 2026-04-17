@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class AutoMovement : MonoBehaviour
+public class AutoMovement : MonoBehaviour, IMovementProvider
 {
     [SerializeField] private float damage = 1f;
     [SerializeField] private float movementSpeed = 250f;
@@ -12,6 +12,8 @@ public class AutoMovement : MonoBehaviour
 
     private Rigidbody2D _rigidbody2D;
     private Vector2 _movementVector;
+    public Vector2 GetNormalizedMovementVector() => _movementVector;
+
     private LineRenderer _lineRenderer;
 
     private bool _ignorePlayer;

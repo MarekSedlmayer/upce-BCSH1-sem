@@ -12,7 +12,7 @@ public class Teleporter : MonoBehaviour
     {
         if (collision.TryGetComponent<PlayerMovement>(out var player))
         {
-            player.transform.position = destination.position;
+            player.transform.position = new Vector3(destination.position.x, destination.position.y, 0);
             PlayerTeleported?.Invoke(this, player);
         }
     }

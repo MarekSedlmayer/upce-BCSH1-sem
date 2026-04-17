@@ -1151,7 +1151,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4810235104543468658, guid: 62ae88d98e331fa42b44a2bc55274335, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4810235104543468658, guid: 62ae88d98e331fa42b44a2bc55274335, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2746,6 +2746,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponDatabase: {fileID: 636940645}
+  particlePools:
+  - prefab: {fileID: 9213896933875042011, guid: 86af6f3642f0be24ca655c0ac1587bc8, type: 3}
+    initSize: 50
+  - prefab: {fileID: 9213896933875042011, guid: 4f35846dcd817ca49aeac1d9d42ed4c1, type: 3}
+    initSize: 5
 --- !u!1 &1523910736
 GameObject:
   m_ObjectHideFlags: 0
@@ -3266,7 +3271,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4810235104543468658, guid: 62ae88d98e331fa42b44a2bc55274335, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4810235104543468658, guid: 62ae88d98e331fa42b44a2bc55274335, type: 3}
       propertyPath: m_LocalPosition.x

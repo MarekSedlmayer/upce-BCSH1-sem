@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
@@ -9,6 +10,7 @@ public class Bullet : MonoBehaviour
     private float _bulletSpeed = 20f;
     private float _damage = 1f;
     private Rigidbody2D _rigidbody2D;
+    [SerializeField] private UnityEvent HitEvent;
 
     public void Init(float timeToLive, float speed, float damage)
     {
@@ -53,6 +55,7 @@ public class Bullet : MonoBehaviour
             {
                 player.GetComponentInChildren<Player>().TakeDamage(_damage);
                 CancelInvoke(nameof(Disable));
+                HitEvent.Invoke();
                 Disable();
             }
         }
@@ -60,11 +63,13 @@ public class Bullet : MonoBehaviour
         {
             destroyable.TakeDamage(_damage);
             CancelInvoke(nameof(Disable));
+            HitEvent.Invoke();
             Disable();
         }
         else
         {
             CancelInvoke(nameof(Disable));
+            HitEvent.Invoke();
             Disable();
         }
     }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4473169755775791489}
   - component: {fileID: 4473169755775791502}
   - component: {fileID: 4473169755775791488}
+  - component: {fileID: 2329112592655534317}
   - component: {fileID: 4473169755775791490}
   - component: {fileID: 4473169755775791491}
   m_Layer: 0
@@ -97,7 +98,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e61c18c0d011dfe40b78dbc57e6396fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2329112592655534317}
+        m_TargetAssemblyTypeName: ParticleSpawner, Assembly-CSharp
+        m_MethodName: Spawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   IsEnemyBullet: 0
+--- !u!114 &2329112592655534317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4473169755775791503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c20df7fe303eed49a934c6240374f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 9213896933875042011, guid: 86af6f3642f0be24ca655c0ac1587bc8, type: 3}
 --- !u!50 &4473169755775791490
 Rigidbody2D:
   serializedVersion: 4

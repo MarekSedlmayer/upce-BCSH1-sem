@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 929088303185604430}
   - component: {fileID: 929088303185604431}
   - component: {fileID: 4824069400424162603}
+  - component: {fileID: 308156377073541146}
   - component: {fileID: 929088303185604429}
   m_Layer: 0
   m_Name: Turret
@@ -142,7 +143,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 462a86822fb73584eb7fcad1c77b50f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -229,6 +230,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  HitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 308156377073541146}
+        m_TargetAssemblyTypeName: SpriteFlash, Assembly-CSharp
+        m_MethodName: Flash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4824069400424162603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +258,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 9213896933875042011, guid: 4f35846dcd817ca49aeac1d9d42ed4c1, type: 3}
+--- !u!114 &308156377073541146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929088303185604466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d0e38a19921e854993cd3a809c9007e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.1
+  _spriteRenderers:
+  - {fileID: 929088303185604425}
 --- !u!114 &929088303185604429
 MonoBehaviour:
   m_ObjectHideFlags: 0

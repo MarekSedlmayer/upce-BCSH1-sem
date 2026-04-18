@@ -11,6 +11,7 @@ public class Destroyable : MonoBehaviour
     [SerializeField] private bool destroyObject = false;
     public event Action<Destroyable> Destroyed;
     [SerializeField] private UnityEvent DestroyedEvent;
+    [SerializeField] private UnityEvent HitEvent;
     public float Health => health;
 
     private bool _destroyed = false;
@@ -20,6 +21,8 @@ public class Destroyable : MonoBehaviour
         if (!_destroyed)
         {
             health -= damage;
+            HitEvent.Invoke();
+
             if (health <= 0)
             {
                 Destroyed?.Invoke(this);

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4810235104543468656}
   - component: {fileID: 4810235104543468657}
   - component: {fileID: 1373831229831203469}
+  - component: {fileID: -7947945267654028114}
   - component: {fileID: 8867747763711598876}
   m_Layer: 0
   m_Name: Container_3
@@ -54,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 462a86822fb73584eb7fcad1c77b50f4, type: 2}
+  - {fileID: 2100000, guid: 6d6ada390b2b8b3419f59b0b0976e06b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -141,6 +142,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: -7947945267654028114}
+        m_TargetAssemblyTypeName: DecalSpawner, Assembly-CSharp
+        m_MethodName: Spawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   HitEvent:
     m_PersistentCalls:
       m_Calls:
@@ -169,6 +182,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 9213896933875042011, guid: 4f35846dcd817ca49aeac1d9d42ed4c1, type: 3}
+--- !u!114 &-7947945267654028114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4810235104543468659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2c69c851eeee514d909c84cc2c3a4ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textureGroup: {fileID: 11400000, guid: a6ee3d4682dbb0c4ba807c78b5365a7f, type: 2}
+  randomRotation: 1
 --- !u!114 &8867747763711598876
 MonoBehaviour:
   m_ObjectHideFlags: 0

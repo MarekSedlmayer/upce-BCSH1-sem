@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class DecalSpawner : MonoBehaviour
 {
-    [SerializeField] private Texture2D craterTexture;
+    [SerializeField] private TextureGroupScriptableObject textureGroup;
     [SerializeField] private bool randomRotation = true;
 
     public void Spawn()
     {
-        FindObjectOfType<GlobalDecalManager>().RequestDecal(craterTexture, transform.position, 64f, randomRotation ? Random.Range(0, 360) : 0);
+        Texture2D tex = textureGroup.Textures[Random.Range(0, textureGroup.Textures.Length)];
+        FindObjectOfType<GlobalDecalManager>().RequestDecal(tex, transform.position, tex.height, randomRotation ? Random.Range(0, 360) : 0);
     }
 }

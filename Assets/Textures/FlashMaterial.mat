@@ -19,14 +19,6 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_7cbcdaf364eb4125bf65191b6c6f2a67:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_e869bada2a004dc2a3b2e5b78073970c:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -44,9 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_3418c68b94b74edaa7fdd2f61ffe6166: 0.6
     - _FlashAmount: 0
     m_Colors:
-    - Color_a54ba989698e4214811c3f216afe3deb: {r: 1, g: 1, b: 1, a: 0}
     - _FlashColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []

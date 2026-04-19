@@ -51,7 +51,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 462a86822fb73584eb7fcad1c77b50f4, type: 2}
+  - {fileID: 2100000, guid: 6d6ada390b2b8b3419f59b0b0976e06b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -149,7 +149,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 462a86822fb73584eb7fcad1c77b50f4, type: 2}
+  - {fileID: 2100000, guid: 6d6ada390b2b8b3419f59b0b0976e06b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -226,6 +226,7 @@ GameObject:
   - component: {fileID: 8211968713162867898}
   - component: {fileID: 8211968713162867899}
   - component: {fileID: 426642422699121532}
+  - component: {fileID: 3701892541408884623}
   - component: {fileID: -2481984511570124998}
   - component: {fileID: 8211968713162867896}
   - component: {fileID: 8211968713162867897}
@@ -308,6 +309,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3701892541408884623}
+        m_TargetAssemblyTypeName: DecalSpawner, Assembly-CSharp
+        m_MethodName: Spawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   HitEvent:
     m_PersistentCalls:
       m_Calls:
@@ -336,6 +349,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 9213896933875042011, guid: 4f35846dcd817ca49aeac1d9d42ed4c1, type: 3}
+--- !u!114 &3701892541408884623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8211968713162867903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2c69c851eeee514d909c84cc2c3a4ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textureGroup: {fileID: 11400000, guid: a6ee3d4682dbb0c4ba807c78b5365a7f, type: 2}
+  randomRotation: 1
 --- !u!114 &-2481984511570124998
 MonoBehaviour:
   m_ObjectHideFlags: 0
